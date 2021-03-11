@@ -14,18 +14,17 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION $IMAGE_TAG
+      - echo $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker build -t $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $URI:latest $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
 
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
+      - docker push $URI:latest
       - docker push $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo Writing image definitions file...
       - printf '{"Version":"1.0","ImageURI":"%s"}' $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION > imageDetail.json
 artifacts:
   files: imageDetail.json
