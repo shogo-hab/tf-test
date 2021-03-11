@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    IMAGE_NAME: 'go/server'
+    IMAGE_NAME: 'alpha/backend'
 phases:
   install:
     runtime-versions:
