@@ -25,6 +25,7 @@ phases:
       - docker push $URI:latest
       - docker push $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo Writing image definitions file...
+      - echo Build completed on `date`
       - printf '{"Version":"1.0","ImageURI":"%s"}' $URI:$CODEBUILD_RESOLVED_SOURCE_VERSION > imageDetail.json
 artifacts:
   files: imageDetail.json
